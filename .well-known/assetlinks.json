@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "amai.org.conventions",
+      "sha256_cert_fingerprints": [
+        "33:55:51:E5:85:C4:BB:E5:72:5F:4C:92:3C:E4:56:AF:BC:7E:C9:AE:01:37:6A:37:A1:B1:31:68:49:70:86:29",
+        "9D:36:46:7D:45:2F:A7:D6:09:C0:E0:E8:6E:B6:0E:B9:27:8D:D8:C1:06:DF:5B:51:E5:96:DF:AF:8B:A8:9D:2C"
+      ]
+    }
+  }
+]
