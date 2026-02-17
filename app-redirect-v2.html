@@ -84,6 +84,10 @@
             font-size: 14px;
             color: #999;
         }
+
+        iframe {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -97,9 +101,11 @@
         </a>
 
         <div class="info">
-            <p>If nothing happens, try manually opening the link above.</p>
+            <p>If nothing happens, try manually clicking the link above.</p>
         </div>
     </div>
+
+    <iframe id="redirect-frame"></iframe>
 
     <script>
         (function() {
@@ -111,18 +117,15 @@
             // Build deep link path with query params
             let deepLink = link;
             if (name) {
-                // Add name as a query parameter
                 const separator = link.includes('?') ? '&' : '?';
                 deepLink += separator + 'name=' + encodeURIComponent(name);
             }
 
-            // If no deep link specified, just open the app without a specific path
-            if (!deepLink) {
-                deepLink = '';
-            }
-
             // Play Store fallback URL
             const playStoreUrl = 'https://play.google.com/store/apps/details?id=amai.org.conventions';
+
+            // Build custom scheme URL
+            const customSchemeUrl = 'org.amai.conventions://' + deepLink;
 
             // Build Android Intent URL
             const intentUrl = 'intent://' + deepLink + '#Intent;' +
@@ -133,23 +136,42 @@
 
             // Debug info
             console.log('Deep link:', deepLink);
+            console.log('Custom scheme URL:', customSchemeUrl);
             console.log('Intent URL:', intentUrl);
 
-            // Create a meta refresh tag to trigger the intent URL
-            // This works better than window.location for Intent URLs
-            const meta = document.createElement('meta');
-            meta.httpEquiv = 'refresh';
-            meta.content = '0; url=' + intentUrl;
-            document.head.appendChild(meta);
-
-            // Set up manual link
+            // Set up manual link to use Intent URL
             const manualLink = document.getElementById('manual-link');
             manualLink.href = intentUrl;
 
-            // Show manual link after 2 seconds as a fallback
+            let appOpened = false;
+
+            // Try to open with custom scheme in iframe
+            const iframe = document.getElementById('redirect-frame');
+            iframe.src = customSchemeUrl;
+
+            // Detect if user left the page (app opened)
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    appOpened = true;
+                }
+            });
+
+            // After 1.5 seconds, if app didn't open, try Intent URL
             setTimeout(function() {
-                manualLink.style.display = 'inline-block';
-            }, 2000);
+                if (!appOpened) {
+                    console.log('Trying Intent URL...');
+                    window.location.href = intentUrl;
+                }
+            }, 1500);
+
+            // Show manual link after 3 seconds
+            setTimeout(function() {
+                if (!appOpened) {
+                    manualLink.style.display = 'inline-block';
+                    document.getElementById('status').textContent =
+                        'App not opening automatically?';
+                }
+            }, 3000);
         })();
     </script>
 </body>
