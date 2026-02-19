@@ -19,6 +19,13 @@
         } 
     }
     redirectBasedOnDevice();
+
+    // Show download link after the redirect was triggered
+    setTimeout(function () {
+            document.getElementById("applink").style.display = 'block';
+    }, 1000);
 </script>
 <!-- This will be displayed if the redirect above didn't work (e.g. the app is not installed) -->
-<a href="https://play.google.com/store/apps/details?id=amai.org.conventions&hl=he">Download Android app to see stand</a>
+<p id="applink" style="display: none;">
+    <a href="https://play.google.com/store/apps/details?id=amai.org.conventions&hl=he">Download Android app to see stand</a>
+</p>
