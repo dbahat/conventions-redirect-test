@@ -18,7 +18,7 @@
         const name = urlParams.get('name');
         let redirectSuccess = false;
         try {
-            location.href="org.amai.conventions://stands/by-name?name=" + encodeURIComponent(name)
+            //location.href="org.amai.conventions://stands/by-name?name=" + encodeURIComponent(name)
             redirectSuccess = true;
         } catch (e) {
             console.log("could not redirect to app");
@@ -27,7 +27,7 @@
 
         setTimeout(function () {
             if (!redirectSuccess) {
-                redirectBasedOnDevice();
+                //redirectBasedOnDevice();
             }
         }, 1000);
     });
