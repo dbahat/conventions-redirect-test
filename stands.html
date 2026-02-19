@@ -1,35 +1,25 @@
 <script>
-    /*document.addEventListener('DOMContentLoaded', function() { 
-        var googlePlayLink = 'https://play.google.com/store/apps/details?id=amai.org.conventions&hl=he'; 
-        //var appStoreLink = 'https://apps.apple.com/se/app/'; 
-        var webLink = 'https://harucon.org.il/stands/'; 
+    document.addEventListener('DOMContentLoaded', function() {
         function redirectBasedOnDevice() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+
+            // Open app via regular deep link (it could work if opened in internal browser or from pasting the address directly)
+            let androidLink = location.href="org.amai.conventions://stands/by-name?name=" + encodeURIComponent(name)
+            //let iosLink = "???"; // Does iOS support deep links?
+            // If we're not on a mobile device we can't open any app, redirect to regular stands page
+            let webLink = "https://harucon.org.il/stands/";
+            
             var userAgent = navigator.userAgent || navigator.vendor || window.opera; 
             if (/android/i.test(userAgent)) { 
-                window.location.href = googlePlayLink; 
+                window.location.href = androidLink; 
             //} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { 
-            //	window.location.href = appStoreLink; 
+            //	window.location.href = iosLink; 
             } else { 
                 window.location.href = webLink; 
             } 
         }
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get('name');
-        let redirectSuccess = false;
-        try {
-            //location.href="org.amai.conventions://stands/by-name?name=" + encodeURIComponent(name)
-            redirectSuccess = true;
-        } catch (e) {
-            console.log("could not redirect to app");
-            console.log(e);
-        }
-
-        setTimeout(function () {
-            if (!redirectSuccess) {
-                //redirectBasedOnDevice();
-            }
-        }, 1000);
-    });*/
+    });
 </script>
-Nothing to see here
+<!-- This will be displayed if the redirect above didn't work (e.g. the app is not installed) -->
+<a href="https://play.google.com/store/apps/details?id=amai.org.conventions&hl=he">Download Android app to see stand</a>
