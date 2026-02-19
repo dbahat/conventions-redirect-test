@@ -1,0 +1,34 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() { 
+        var googlePlayLink = 'https://play.google.com/store/apps/details?id=amai.org.conventions&hl=he'; 
+        //var appStoreLink = 'https://apps.apple.com/se/app/'; 
+        var webLink = 'https://harucon.org.il/stands/'; 
+        function redirectBasedOnDevice() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera; 
+            if (/android/i.test(userAgent)) { 
+                window.location.href = googlePlayLink; 
+            //} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { 
+            //	window.location.href = appStoreLink; 
+            } else { 
+                window.location.href = webLink; 
+            } 
+        }
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        let redirectSuccess = false;
+        try {
+            location.href="org.amai.conventions://stands/by-name?name=" + encodeURIComponent(name)
+            redirectSuccess = true;
+        } catch (e) {
+            console.log("could not redirect to app");
+            console.log(e);
+        }
+
+        setTimeout(function () {
+            if (!redirectSuccess) {
+                redirectBasedOnDevice();
+            }
+        }, 1000);
+    });
+</script>
