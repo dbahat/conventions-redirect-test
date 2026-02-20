@@ -1,4 +1,4 @@
-<script>
+    <script>
     function redirectBasedOnDevice() {
         const urlParams = new URLSearchParams(window.location.search);
         const name = urlParams.get('name');
@@ -10,8 +10,12 @@
         let webLink = "https://harucon.org.il/stands/";
         
         var userAgent = navigator.userAgent || navigator.vendor || window.opera; 
-        if (/android/i.test(userAgent)) { 
-            window.location.href = androidLink; 
+        if (/android/i.test(userAgent)) {
+            try {
+                window.location.href = androidLink; 
+            } catch (e) {
+                console.log(e);
+            }
         //} else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { 
         //	window.location.href = iosLink; 
         } else { 
