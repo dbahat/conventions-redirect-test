@@ -4,7 +4,7 @@
         const name = urlParams.get('name');
 
         // Open app via regular deep link (it could work if opened in internal browser or from pasting the address directly)
-        let androidLink = location.href="org.amai.conventions1://stands/by-name?name=" + encodeURIComponent(name)
+        let androidLink = "org.amai.conventions1://stands/by-name?name=" + encodeURIComponent(name)
         //let iosLink = "???"; // Does iOS support deep links?
         // If we're not on a mobile device we can't open any app, redirect to regular stands page
         let webLink = "https://harucon.org.il/stands/";
